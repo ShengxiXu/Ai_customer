@@ -287,7 +287,8 @@ export interface AIAgent {
   avatar: string;
   status: AIAgentStatus;
   boundChannels: AIAgentChannel[];
-  expertise?: string;
+  description: string;
+  knowledgeBaseName: string;
   createdAt: string;
   updatedAt: string;
   scope: AIAgentScope;
@@ -295,7 +296,20 @@ export interface AIAgent {
   pauseRule: AIAgentPauseRule;
   replyConfig: AIAgentReplyConfig;
   skills: AIAgentSkill[];
+  skillNodes: SkillNode[];
   learning: AIAgentLearning;
+}
+
+export type SkillNodeType = "filter" | "trigger" | "skill";
+
+export interface SkillNode {
+  id: string;
+  type: SkillNodeType;
+  label: string;
+  subLabel?: string;
+  condition?: string;
+  action?: string;
+  enabled: boolean;
 }
 
 // ===== 数据统计 =====
