@@ -152,11 +152,17 @@ export interface KnowledgeDocument {
 }
 
 // ===== AI配置 =====
+export type AITone = "professional" | "friendly" | "casual" | "enthusiastic";
+
 export interface AIConfig {
   model: string;
+  apiKey: string;
+  apiBaseUrl: string;
   temperature: number;
   maxTokens: number;
   systemPrompt: string;
+  welcomeMessage: string;
+  tone: AITone;
   antiAdEnabled: boolean;
   autoReplyEnabled: boolean;
   autoReplyDelay: number;
@@ -164,7 +170,23 @@ export interface AIConfig {
   selfEvolutionEnabled: boolean;
   fallbackToHuman: boolean;
   fallbackThreshold: number;
+  maxConversationTurns: number;
+  knowledgeCategoryIds: string[];
+  proactivelyMessage: boolean;
+  extractContactEnabled: boolean;
+  emotionAnalysisEnabled: boolean;
 }
+
+export type ScriptCategory = "greeting" | "lead" | "objection" | "closing" | "fallback" | "followup";
+
+export const ScriptCategoryLabels: Record<ScriptCategory, string> = {
+  greeting: "开场问候",
+  lead: "留资引导",
+  objection: "异议处理",
+  closing: "结束语",
+  fallback: "转人工",
+  followup: "跟进回访",
+};
 
 export interface ScriptTemplate {
   id: string;
@@ -175,6 +197,8 @@ export interface ScriptTemplate {
   enabled: boolean;
   hitCount: number;
   conversionRate: number;
+  category: ScriptCategory;
+  priority: number;
 }
 
 // ===== 数据统计 =====

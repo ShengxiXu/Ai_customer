@@ -739,6 +739,8 @@ export const mockKnowledgeDocuments: KnowledgeDocument[] = [
 // ===== AI配置 =====
 export const defaultAIConfig: AIConfig = {
   model: "deepseek-chat",
+  apiKey: "sk-****************************",
+  apiBaseUrl: "https://api.deepseek.com/v1",
   temperature: 0.7,
   maxTokens: 1024,
   systemPrompt: `你是一位专业的教育机构客服代表，名叫"小智"。你的职责是：
@@ -748,6 +750,8 @@ export const defaultAIConfig: AIConfig = {
 4. 保持亲切友好的语气，适当使用emoji
 5. 遇到超出知识库范围的问题，诚实告知并转接人工客服
 请始终保持"以人为本"的服务理念，避免使用过于推销的话术。`,
+  welcomeMessage: "您好呀~ 我是智客教育的AI课程顾问小智，有什么可以帮到您的吗？😊",
+  tone: "friendly",
   antiAdEnabled: true,
   autoReplyEnabled: true,
   autoReplyDelay: 3,
@@ -755,6 +759,11 @@ export const defaultAIConfig: AIConfig = {
   selfEvolutionEnabled: true,
   fallbackToHuman: true,
   fallbackThreshold: 0.6,
+  maxConversationTurns: 15,
+  knowledgeCategoryIds: ["cat_1", "cat_2", "cat_3"],
+  proactivelyMessage: true,
+  extractContactEnabled: true,
+  emotionAnalysisEnabled: true,
 };
 
 // ===== 话术模板 =====
@@ -768,6 +777,8 @@ export const mockScriptTemplates: ScriptTemplate[] = [
     enabled: true,
     hitCount: 1280,
     conversionRate: 0.32,
+    category: "greeting",
+    priority: 1,
   },
   {
     id: "script_2",
@@ -778,6 +789,8 @@ export const mockScriptTemplates: ScriptTemplate[] = [
     enabled: true,
     hitCount: 456,
     conversionRate: 0.68,
+    category: "lead",
+    priority: 1,
   },
   {
     id: "script_3",
@@ -788,6 +801,8 @@ export const mockScriptTemplates: ScriptTemplate[] = [
     enabled: true,
     hitCount: 623,
     conversionRate: 0.41,
+    category: "lead",
+    priority: 2,
   },
   {
     id: "script_4",
@@ -798,6 +813,8 @@ export const mockScriptTemplates: ScriptTemplate[] = [
     enabled: true,
     hitCount: 234,
     conversionRate: 0.35,
+    category: "objection",
+    priority: 1,
   },
   {
     id: "script_5",
@@ -808,6 +825,8 @@ export const mockScriptTemplates: ScriptTemplate[] = [
     enabled: true,
     hitCount: 89,
     conversionRate: 0.72,
+    category: "fallback",
+    priority: 1,
   },
   {
     id: "script_6",
@@ -818,6 +837,32 @@ export const mockScriptTemplates: ScriptTemplate[] = [
     enabled: true,
     hitCount: 312,
     conversionRate: 0.95,
+    category: "closing",
+    priority: 1,
+  },
+  {
+    id: "script_7",
+    name: "跟进回访-未回复",
+    scenario: "客户超过24小时未回复",
+    trigger: "上次对话超过24小时无回应",
+    content: "嗨~ 昨天和您聊的课程方面还有什么疑问吗？我们这周刚好有新的试听名额开放，需要帮您留一个吗？😄",
+    enabled: false,
+    hitCount: 156,
+    conversionRate: 0.18,
+    category: "followup",
+    priority: 3,
+  },
+  {
+    id: "script_8",
+    name: "竞品对比异议",
+    scenario: "客户提到竞品",
+    trigger: "客户提及其他机构名称",
+    content: "每家机构都有自己的特色呢~ 相比之下，我们的优势在于：1️⃣ 师资全部985/211硕士起步 2️⃣ 小班教学，每班不超过8人 3️⃣ 不满意随时退费。要不我发份详细对比表给您看看？",
+    enabled: true,
+    hitCount: 178,
+    conversionRate: 0.29,
+    category: "objection",
+    priority: 2,
   },
 ];
 
