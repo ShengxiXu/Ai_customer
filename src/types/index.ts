@@ -201,6 +201,103 @@ export interface ScriptTemplate {
   priority: number;
 }
 
+// ===== AI员工(Agent) =====
+export type AgentTemplate = "active_lead" | "card_lead" | "deep_mining" | "precise_lead" | "blank";
+
+export const AgentTemplateLabels: Record<AgentTemplate, string> = {
+  active_lead: "主动获客",
+  card_lead: "名片获客",
+  deep_mining: "深度挖掘",
+  precise_lead: "精准获客",
+  blank: "空白创建",
+};
+
+export type AIAgentStatus = "enabled" | "disabled";
+
+export interface AIAgentChannel {
+  platform: Platform;
+  accountName: string;
+  accountId: string;
+}
+
+export interface AIAgentScope {
+  channels: AIAgentChannel[];
+  serviceMode: "all_day" | "custom";
+  serviceTimeStart?: string;
+  serviceTimeEnd?: string;
+  expertise: string;
+}
+
+export interface AIAgentStyle {
+  greeting: string;
+  defaultTone: string;
+  toneConstraint: string;
+  checkWechat: boolean;
+  wechatReplacement: string;
+  checkPhone: boolean;
+  phoneReplacement: string;
+}
+
+export interface AIAgentPauseRule {
+  satisfactionEnabled: boolean;
+  keywordEnabled: boolean;
+  pauseKeywords: string[];
+  platformStrategyEnabled: boolean;
+  xiaohongshuDelay: number;
+  douyinDelay: number;
+}
+
+export interface AIAgentReplyConfig {
+  maxLength: "short" | "medium" | "long" | "unlimited";
+  aggregateWindow: number;
+  delayedReplyInterval: number;
+}
+
+export type AISkillType = "lead" | "profile" | "filter" | "exclude" | "smart_play" | "auto_reply" | "self_learn";
+
+export const AISkillTypeLabels: Record<AISkillType, string> = {
+  lead: "获客",
+  profile: "记客户档案",
+  filter: "筛选",
+  exclude: "排除",
+  smart_play: "智能出牌",
+  auto_reply: "自动回复",
+  self_learn: "自我学习",
+};
+
+export interface AIAgentSkill {
+  type: AISkillType;
+  name: string;
+  description: string;
+  enabled: boolean;
+  hasWarning?: boolean;
+}
+
+export interface AIAgentLearning {
+  companyIntro: string;
+  productIntro: string;
+  serviceAudience: string;
+  businessKnowledge: string;
+}
+
+export interface AIAgent {
+  id: string;
+  name: string;
+  template: AgentTemplate;
+  avatar: string;
+  status: AIAgentStatus;
+  boundChannels: AIAgentChannel[];
+  expertise?: string;
+  createdAt: string;
+  updatedAt: string;
+  scope: AIAgentScope;
+  style: AIAgentStyle;
+  pauseRule: AIAgentPauseRule;
+  replyConfig: AIAgentReplyConfig;
+  skills: AIAgentSkill[];
+  learning: AIAgentLearning;
+}
+
 // ===== 数据统计 =====
 export interface DashboardStats {
   totalConversations: number;
